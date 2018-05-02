@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Game_Controller : MonoBehaviour {
 
@@ -11,9 +12,9 @@ public class Game_Controller : MonoBehaviour {
 	public float spawnWait;
 	public float startWait;
 	public float waveWait;
-	public GUIText scoreText;
-	public GUIText restartText;
-	public GUIText gameOverText;
+	public Text scoreText;
+	public Text restartText;
+	public Text gameOverText;
 
 	private bool gameOver;
 	private bool restart;
@@ -72,7 +73,7 @@ public class Game_Controller : MonoBehaviour {
 
 	public void GameOver(){
 
-		gameOverText.text = "GameOver!";
+		gameOverText.text = "Game Over!";
 		gameOver = true;
 	}
 }
