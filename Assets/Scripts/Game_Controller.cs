@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Game_Controller : MonoBehaviour {
 
 	public GameObject hazard;
+	public GameObject fuel;
 	public Vector3 spawnValues;
 	public int hazardCount;
 	public float spawnWait;
@@ -19,6 +20,7 @@ public class Game_Controller : MonoBehaviour {
 	private bool gameOver;
 	private bool restart;
 	private int score;
+	private int randomTimeFuel;
 
 	void Start(){
 		gameOver = false;
@@ -31,7 +33,9 @@ public class Game_Controller : MonoBehaviour {
 	}
 
 	void Update(){
-
+		if (GameObject.FindGameObjectsWithTag ("Player").Length == 0) {
+			GameOver ();
+		}
 		if (restart) {
 			if (Input.GetKeyDown (KeyCode.R)) {
 
@@ -44,10 +48,15 @@ public class Game_Controller : MonoBehaviour {
 		
 		yield return new WaitForSeconds (startWait);
 		while (true) {
-			for (int i = 0; i < hazardCount; i++) {
+			randomTimeFuel = Random.Range (0, hazardCount);
+			for (int i = 0; i <= hazardCount; i++) {
 				Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
 				Quaternion spawnRotation = Quaternion.identity;
 				Instantiate (hazard, spawnPosition, spawnRotation);
+					if (i == randomTimeFuel) {
+					yield return new WaitForSeconds (spawnWait);
+					Instantiate (fuel, spawnPosition, spawnRotation);
+				}
 				yield return new WaitForSeconds (spawnWait);
 			}
 			yield return new WaitForSeconds (waveWait);
